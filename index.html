@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>V2Ray6 - Access Gate</title>
+    <style>
+        body { background-color: #0e1621; color: #ffffff; font-family: sans-serif; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
+        .container { width: 100%; max-width: 450px; text-align: center; margin-top: 15px; }
+        h2 { color: #2481cc; font-size: 1.4rem; margin-bottom: 20px; }
+        
+        /* تنسيق البطاقات والصور */
+        .card { background: #17212b; border-radius: 12px; border: 2px solid #242f3d; margin-bottom: 20px; padding: 10px; transition: 0.3s; position: relative; }
+        .card img { width: 100%; border-radius: 8px; display: block; margin-bottom: 10px; }
+        
+        .btn-ad { background: #2481cc; color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; display: block; cursor: pointer; border: none; }
+        .btn-ad:disabled { background: #2c3b4a; color: #5d6a78; cursor: not-allowed; }
+
+        #timer-msg { margin-top: 10px; font-size: 0.9rem; color: #00ff80; min-height: 20px; }
+
+        /* زر التليجرام */
+        #tg-btn { 
+            display: none; background: #0088cc; color: white; padding: 18px; 
+            border-radius: 12px; text-decoration: none; font-size: 1.1rem; 
+            font-weight: bold; margin-top: 25px; width: 100%; box-shadow: 0 0 20px rgba(0,136,204,0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>🔓 بوابة التحقق للدخول</h2>
+        
+        <div class="card" id="step1">
+            <img src="img 01" alt="الخطوة 1">
+            <button class="btn-ad" onclick="openAd(1, 'https://omg10.com/4/10637838')">إضغط هنا (إعلان 1)</button>
+        </div>
+
+        <div class="card" id="step2" style="opacity: 0.4; pointer-events: none;">
+            <img src="img 02" alt="الخطوة 2">
+            <button class="btn-ad" id="btn2" onclick="openAd(2, 'https://omg10.com/4/10639585')">إضغط هنا (إعلان 2)</button>
+        </div>
+
+        <div id="timer-msg"></div>
+
+        <a href="https://t.me/اسم_قناتك" id="tg-btn">🚀 انضم للقناة الآن (تم فك القفل)</a>
+    </div>
+
+    <script>
+        let counter = 0;
+
+        function openAd(step, url) {
+            // فتح الإعلان في تبويب جديد
+            window.open(url, '_blank');
+            
+            const msg = document.getElementById('timer-msg');
+            let time = 10;
+            
+            const countdown = setInterval(() => {
+                time--;
+                msg.innerText = "جاري التحقق من الخطوة " + step + "... انتظر (" + time + ")";
+                
+                if (time <= 0) {
+                    clearInterval(countdown);
+                    msg.innerText = "✅ اكتملت الخطوة " + step;
+                    
+                    if (step === 1) {
+                        // تفعيل الصورة الثانية img 02
+                        document.getElementById('step2').style.opacity = "1";
+                        document.getElementById('step2').style.pointerEvents = "all";
+                    } else if (step === 2) {
+                        // إظهار زر التليجرام
+                        document.getElementById('tg-btn').style.display = 'block';
+                    }
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
