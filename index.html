@@ -2,75 +2,104 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>V2Ray6 - Access Gate</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V2Ray6 - Cyber Access</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #0e1621; color: #ffffff; font-family: sans-serif; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
-        .container { width: 100%; max-width: 450px; text-align: center; margin-top: 15px; }
-        h2 { color: #2481cc; font-size: 1.4rem; margin-bottom: 20px; }
+        :root { --neon: #00e0ff; --dark: #0a0a0b; --card: #161b22; }
+        body { background-color: var(--dark); color: white; font-family: 'Cairo', sans-serif; display: flex; flex-direction: column; align-items: center; margin: 0; padding: 20px; overflow-x: hidden; }
         
-        /* تنسيق البطاقات والصور */
-        .card { background: #17212b; border-radius: 12px; border: 2px solid #242f3d; margin-bottom: 20px; padding: 10px; transition: 0.3s; position: relative; }
-        .card img { width: 100%; border-radius: 8px; display: block; margin-bottom: 10px; }
-        
-        .btn-ad { background: #2481cc; color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; display: block; cursor: pointer; border: none; }
-        .btn-ad:disabled { background: #2c3b4a; color: #5d6a78; cursor: not-allowed; }
+        /* تأثير العنوان المشع */
+        .cyber-header { margin-top: 30px; text-align: center; }
+        .cyber-header h1 { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; color: var(--neon); text-shadow: 0 0 20px rgba(0,224,255,0.7); margin: 0; }
+        .cyber-header p { color: #888; font-size: 0.9rem; margin-top: 5px; }
 
-        #timer-msg { margin-top: 10px; font-size: 0.9rem; color: #00ff80; min-height: 20px; }
+        .container { width: 100%; max-width: 420px; margin-top: 40px; }
 
-        /* زر التليجرام */
-        #tg-btn { 
-            display: none; background: #0088cc; color: white; padding: 18px; 
-            border-radius: 12px; text-decoration: none; font-size: 1.1rem; 
-            font-weight: bold; margin-top: 25px; width: 100%; box-shadow: 0 0 20px rgba(0,136,204,0.4);
+        /* تصميم البطاقات الزجاجي */
+        .step-card { 
+            background: var(--card); border: 1px solid #30363d; border-radius: 20px; 
+            padding: 15px; margin-bottom: 25px; transition: 0.4s; position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
+        .step-card.active { border-color: var(--neon); box-shadow: 0 0 20px rgba(0,224,255,0.2); }
+        .step-label { position: absolute; top: -12px; right: 20px; background: var(--neon); color: black; padding: 2px 15px; border-radius: 10px; font-weight: bold; font-size: 0.8rem; }
+
+        /* إصلاح عرض الصور */
+        .img-container { width: 100%; border-radius: 15px; overflow: hidden; margin-bottom: 15px; border: 1px solid #333; height: 180px; background: #000; }
+        .img-container img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* أزرار النيون */
+        .cyber-btn { 
+            width: 100%; background: transparent; border: 2px solid var(--neon); color: var(--neon);
+            padding: 12px; border-radius: 12px; font-weight: bold; font-size: 1rem;
+            cursor: pointer; transition: 0.3s; font-family: 'Cairo', sans-serif;
+        }
+        .cyber-btn:hover { background: var(--neon); color: black; box-shadow: 0 0 20px var(--neon); }
+        .cyber-btn:disabled { border-color: #333; color: #555; cursor: not-allowed; }
+
+        /* حالة العداد */
+        .status-text { margin-top: 10px; font-size: 0.85rem; color: #00ff88; min-height: 20px; font-family: 'Orbitron', sans-serif; }
+
+        /* زر التليجرام الكبير */
+        #tg-link { 
+            display: none; width: 100%; background: linear-gradient(90deg, #0088cc, #00e0ff);
+            color: white; text-decoration: none; padding: 20px; border-radius: 15px;
+            font-weight: bold; text-align: center; margin-top: 20px;
+            box-shadow: 0 0 30px rgba(0,136,204,0.5); animation: steam 2s infinite;
+        }
+        @keyframes steam { 0% { opacity: 0.8; } 50% { opacity: 1; } 100% { opacity: 0.8; } }
     </style>
 </head>
 <body>
 
+    <div class="cyber-header">
+        <h1>V2Ray6 Access</h1>
+        <p>بوابة العبور الآمنة للقناة الرسمية</p>
+    </div>
+
     <div class="container">
-        <h2>🔓 بوابة التحقق للدخول</h2>
-        
-        <div class="card" id="step1">
-            <img src="img 01" alt="الخطوة 1">
-            <button class="btn-ad" onclick="openAd(1, 'https://omg10.com/4/10637838')">إضغط هنا (إعلان 1)</button>
+        <div class="step-card active" id="card1">
+            <div class="step-label">STEP 01</div>
+            <div class="img-container">
+                <img src="img 01.jpg" onerror="this.src='https://via.placeholder.com/400x200/161b22/00e0ff?text=IMG+01+NOT+FOUND'" alt="Image 1">
+            </div>
+            <button class="cyber-btn" onclick="processStep(1, 'https://omg10.com/4/10637838')">🔓 فتح التحقق الأول</button>
+            <div id="status1" class="status-text"></div>
         </div>
 
-        <div class="card" id="step2" style="opacity: 0.4; pointer-events: none;">
-            <img src="img 02" alt="الخطوة 2">
-            <button class="btn-ad" id="btn2" onclick="openAd(2, 'https://omg10.com/4/10639585')">إضغط هنا (إعلان 2)</button>
+        <div class="step-card" id="card2" style="opacity: 0.3; pointer-events: none;">
+            <div class="step-label">STEP 02</div>
+            <div class="img-container">
+                <img src="img 02.jpg" onerror="this.src='https://via.placeholder.com/400x200/161b22/00e0ff?text=IMG+02+NOT+FOUND'" alt="Image 2">
+            </div>
+            <button class="cyber-btn" onclick="processStep(2, 'https://omg10.com/4/10639585')">🔓 فتح التحقق الثاني</button>
+            <div id="status2" class="status-text"></div>
         </div>
 
-        <div id="timer-msg"></div>
-
-        <a href="https://t.me/اسم_قناتك" id="tg-btn">🚀 انضم للقناة الآن (تم فك القفل)</a>
+        <a href="https://t.me/اسم_قناتك" id="tg-link">🚀 دخول قناة التليجرام الرسمية</a>
     </div>
 
     <script>
-        let counter = 0;
-
-        function openAd(step, url) {
-            // فتح الإعلان في تبويب جديد
-            window.open(url, '_blank');
+        function processStep(step, adUrl) {
+            window.open(adUrl, '_blank');
+            let timer = 10;
+            const status = document.getElementById('status' + step);
             
-            const msg = document.getElementById('timer-msg');
-            let time = 10;
-            
-            const countdown = setInterval(() => {
-                time--;
-                msg.innerText = "جاري التحقق من الخطوة " + step + "... انتظر (" + time + ")";
+            const interval = setInterval(() => {
+                timer--;
+                status.innerText = "VERIFYING... " + timer + "S";
                 
-                if (time <= 0) {
-                    clearInterval(countdown);
-                    msg.innerText = "✅ اكتملت الخطوة " + step;
-                    
+                if (timer <= 0) {
+                    clearInterval(interval);
+                    status.innerText = "✅ VERIFIED SUCCESS";
                     if (step === 1) {
-                        // تفعيل الصورة الثانية img 02
-                        document.getElementById('step2').style.opacity = "1";
-                        document.getElementById('step2').style.pointerEvents = "all";
-                    } else if (step === 2) {
-                        // إظهار زر التليجرام
-                        document.getElementById('tg-btn').style.display = 'block';
+                        const c2 = document.getElementById('card2');
+                        c2.style.opacity = "1";
+                        c2.style.pointerEvents = "all";
+                        c2.classList.add('active');
+                    } else {
+                        document.getElementById('tg-link').style.display = 'block';
                     }
                 }
             }, 1000);
