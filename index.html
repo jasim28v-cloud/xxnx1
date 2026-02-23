@@ -3,103 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>V2Ray6 - Cyber Access</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <title>V2Ray6 - Cyber Verification</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Cairo:wght@700&display=swap" rel="stylesheet">
     <style>
-        :root { --neon: #00e0ff; --dark: #0a0a0b; --card: #161b22; }
-        body { background-color: var(--dark); color: white; font-family: 'Cairo', sans-serif; display: flex; flex-direction: column; align-items: center; margin: 0; padding: 20px; overflow-x: hidden; }
+        :root { --neon-blue: #00f2ff; --neon-purple: #bc13fe; --dark-bg: #050505; }
+        body { background-color: var(--dark-bg); color: #fff; font-family: 'Cairo', sans-serif; display: flex; flex-direction: column; align-items: center; margin: 0; padding: 20px; }
         
-        /* تأثير العنوان المشع */
-        .cyber-header { margin-top: 30px; text-align: center; }
-        .cyber-header h1 { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; color: var(--neon); text-shadow: 0 0 20px rgba(0,224,255,0.7); margin: 0; }
-        .cyber-header p { color: #888; font-size: 0.9rem; margin-top: 5px; }
+        .header { margin-top: 20px; text-align: center; }
+        .header h1 { font-family: 'Orbitron', sans-serif; color: var(--neon-blue); text-shadow: 0 0 15px var(--neon-blue); font-size: 1.8rem; margin: 0; }
 
-        .container { width: 100%; max-width: 420px; margin-top: 40px; }
+        .gate-container { width: 100%; max-width: 400px; margin-top: 30px; }
 
-        /* تصميم البطاقات الزجاجي */
-        .step-card { 
-            background: var(--card); border: 1px solid #30363d; border-radius: 20px; 
-            padding: 15px; margin-bottom: 25px; transition: 0.4s; position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        /* تصميم الكروت الاحترافي */
+        .cyber-card { 
+            background: #111; border: 2px solid #222; border-radius: 15px; 
+            padding: 10px; margin-bottom: 25px; transition: 0.5s; position: relative;
         }
-        .step-card.active { border-color: var(--neon); box-shadow: 0 0 20px rgba(0,224,255,0.2); }
-        .step-label { position: absolute; top: -12px; right: 20px; background: var(--neon); color: black; padding: 2px 15px; border-radius: 10px; font-weight: bold; font-size: 0.8rem; }
+        .cyber-card.unlocked { border-color: var(--neon-blue); box-shadow: 0 0 15px rgba(0, 242, 255, 0.3); }
+        
+        /* ضبط ظهور الصور بناءً على أسماء ملفاتك */
+        .img-box { width: 100%; height: 200px; border-radius: 10px; overflow: hidden; background: #000; margin-bottom: 15px; border: 1px solid #333; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* إصلاح عرض الصور */
-        .img-container { width: 100%; border-radius: 15px; overflow: hidden; margin-bottom: 15px; border: 1px solid #333; height: 180px; background: #000; }
-        .img-container img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* أزرار النيون */
-        .cyber-btn { 
-            width: 100%; background: transparent; border: 2px solid var(--neon); color: var(--neon);
-            padding: 12px; border-radius: 12px; font-weight: bold; font-size: 1rem;
-            cursor: pointer; transition: 0.3s; font-family: 'Cairo', sans-serif;
+        .action-btn { 
+            width: 100%; background: transparent; border: 1px solid var(--neon-blue); color: var(--neon-blue);
+            padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s;
         }
-        .cyber-btn:hover { background: var(--neon); color: black; box-shadow: 0 0 20px var(--neon); }
-        .cyber-btn:disabled { border-color: #333; color: #555; cursor: not-allowed; }
+        .action-btn:hover { background: var(--neon-blue); color: #000; box-shadow: 0 0 20px var(--neon-blue); }
+        .action-btn:disabled { border-color: #333; color: #444; cursor: not-allowed; }
 
-        /* حالة العداد */
-        .status-text { margin-top: 10px; font-size: 0.85rem; color: #00ff88; min-height: 20px; font-family: 'Orbitron', sans-serif; }
+        #timer { margin-top: 10px; font-family: 'Orbitron', sans-serif; color: #00ff88; font-size: 0.8rem; text-align: center; height: 20px; }
 
-        /* زر التليجرام الكبير */
-        #tg-link { 
-            display: none; width: 100%; background: linear-gradient(90deg, #0088cc, #00e0ff);
-            color: white; text-decoration: none; padding: 20px; border-radius: 15px;
-            font-weight: bold; text-align: center; margin-top: 20px;
-            box-shadow: 0 0 30px rgba(0,136,204,0.5); animation: steam 2s infinite;
+        /* زر التليجرام النهائي */
+        #telegram-gate { 
+            display: none; width: 100%; background: linear-gradient(45deg, #0088cc, var(--neon-blue));
+            color: white; text-decoration: none; padding: 18px; border-radius: 10px;
+            text-align: center; font-weight: bold; margin-top: 10px;
+            box-shadow: 0 0 25px rgba(0, 136, 204, 0.6);
         }
-        @keyframes steam { 0% { opacity: 0.8; } 50% { opacity: 1; } 100% { opacity: 0.8; } }
     </style>
 </head>
 <body>
 
-    <div class="cyber-header">
-        <h1>V2Ray6 Access</h1>
-        <p>بوابة العبور الآمنة للقناة الرسمية</p>
+    <div class="header">
+        <h1>V2Ray6 GATE</h1>
+        <p style="color: #666; font-size: 0.8rem;">نظام التحقق من الوصول الآمن</p>
     </div>
 
-    <div class="container">
-        <div class="step-card active" id="card1">
-            <div class="step-label">STEP 01</div>
-            <div class="img-container">
-                <img src="img 01.jpg" onerror="this.src='https://via.placeholder.com/400x200/161b22/00e0ff?text=IMG+01+NOT+FOUND'" alt="Image 1">
+    <div class="gate-container">
+        <div class="cyber-card unlocked" id="card1">
+            <div class="img-box">
+                <img src="img 01.jpg" alt="Step 1">
             </div>
-            <button class="cyber-btn" onclick="processStep(1, 'https://omg10.com/4/10637838')">🔓 فتح التحقق الأول</button>
-            <div id="status1" class="status-text"></div>
+            <button class="action-btn" onclick="startVerify(1, 'https://omg10.com/4/10637838')">🔓 تخطي التحقق الأول</button>
         </div>
 
-        <div class="step-card" id="card2" style="opacity: 0.3; pointer-events: none;">
-            <div class="step-label">STEP 02</div>
-            <div class="img-container">
-                <img src="img 02.jpg" onerror="this.src='https://via.placeholder.com/400x200/161b22/00e0ff?text=IMG+02+NOT+FOUND'" alt="Image 2">
+        <div class="cyber-card" id="card2" style="opacity: 0.2; pointer-events: none;">
+            <div class="img-box">
+                <img src="img 02.jpg" alt="Step 2">
             </div>
-            <button class="cyber-btn" onclick="processStep(2, 'https://omg10.com/4/10639585')">🔓 فتح التحقق الثاني</button>
-            <div id="status2" class="status-text"></div>
+            <button class="action-btn" id="btn2" onclick="startVerify(2, 'https://omg10.com/4/10639585')">🔓 تخطي التحقق الثاني</button>
         </div>
 
-        <a href="https://t.me/اسم_قناتك" id="tg-link">🚀 دخول قناة التليجرام الرسمية</a>
+        <div id="timer"></div>
+
+        <a href="https://t.me/اسم_قناتك" id="telegram-gate">🚀 انضم لقناة التليجرام (تم التحقق)</a>
     </div>
 
     <script>
-        function processStep(step, adUrl) {
+        function startVerify(step, adUrl) {
             window.open(adUrl, '_blank');
-            let timer = 10;
-            const status = document.getElementById('status' + step);
+            let timeLeft = 10;
+            const timerDisplay = document.getElementById('timer');
             
-            const interval = setInterval(() => {
-                timer--;
-                status.innerText = "VERIFYING... " + timer + "S";
+            const countdown = setInterval(() => {
+                timeLeft--;
+                timerDisplay.innerText = "SYSTEM CHECKING... " + timeLeft + "s";
                 
-                if (timer <= 0) {
-                    clearInterval(interval);
-                    status.innerText = "✅ VERIFIED SUCCESS";
+                if (timeLeft <= 0) {
+                    clearInterval(countdown);
+                    timerDisplay.innerText = "✅ STEP " + step + " COMPLETE";
                     if (step === 1) {
                         const c2 = document.getElementById('card2');
                         c2.style.opacity = "1";
                         c2.style.pointerEvents = "all";
-                        c2.classList.add('active');
+                        c2.classList.add('unlocked');
                     } else {
-                        document.getElementById('tg-link').style.display = 'block';
+                        document.getElementById('telegram-gate').style.display = 'block';
+                        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
                     }
                 }
             }, 1000);
